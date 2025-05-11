@@ -1,4 +1,4 @@
-# <img src="https://raw.githubusercontent.com/robwilkerson/alfred-sarcastic-text-gen/refs/heads/main/icon.jpg?raw=true" width="45" align="center" alt="icon" style="max-width: 100%;"> Sarcastic Text Generator | Alfred Workflow
+# <img src="https://raw.githubusercontent.com/robwilkerson/alfred-sarcastic-text-gen/refs/heads/main/icon.jpg" width="45" align="center" alt="icon" style="max-width: 100%;"> Sarcastic Text Generator | Alfred Workflow
 
 A simple [workflow for Alfred](https://www.alfredapp.com/workflows/) to express sarcasm in writing. The workflow accepts a string and displays a configurable number of variants of that string in the mixed caps format that has become recognizable as sarcasm.
 
