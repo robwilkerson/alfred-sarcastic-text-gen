@@ -5,12 +5,11 @@ import (
 	"fmt"
 	"math/rand"
 	"os"
+	"strconv"
 	"strings"
 	"time"
 	"unicode"
 )
-
-const LIMIT = 5
 
 type Item struct {
 	Title    string `json:"title"`
@@ -72,16 +71,20 @@ func main() {
 	// Check if an argument was provided.
 	if len(os.Args) != 2 {
 		fmt.Println("Usage: go run main.go <string>")
+		fmt.Println("Alfred Usage: sc <string>")
 		os.Exit(1) // Exit with an error code.
 	}
 
 	// Get the input string from the command line argument.
 	input := os.Args[1]
 
+	// The options we'll return
 	var results = []Item{}
+	// The max number of options to return
+	var limit, _ = strconv.Atoi(os.Getenv("LIMIT"))
 
 	// Call the function to normalize and randomly capitalize the string.
-	for i := 0; i < LIMIT; i++ {
+	for _ = range limit {
 		result := Sarcastify(input)
 		results = append(results, Item{
 			Title: result, // displayed
