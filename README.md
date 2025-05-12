@@ -4,7 +4,7 @@ A simple [workflow for Alfred](https://www.alfredapp.com/workflows/) to express 
 
 ## Installation
 
-Download the latest release and double click to install the workflow.
+Download the [latest release](https://github.com/robwilkerson/alfred-sarcastic-text-gen/releases) and double click to install the workflow.
 
 ## Usage
 
