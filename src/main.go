@@ -40,6 +40,30 @@ func normalizeString(str string) string {
 	return normalized
 }
 
+// disambiguateChar accepts a rune and, if the rune is one that can be ambiguous
+// when displayed (e.g., lowercase "L" looks like and uppercase "I"), returns
+// the disambiguated form of that rune.
+//
+// The function doesn't just remove a letter because it's  ambiguous, nor does
+// it change a zero (0) to something else entirely go avoid the ambiguity
+// because the meaning of the larger string should not be altered. It only maps
+// characters to a less ambiguous character with the same value.
+func disambiguateChar(r rune) rune {
+	ambiguousChars := map[string]rune{
+		"I": rune('i'), // Can look like lowercase "L"
+		"l": rune('L'), // Can look like uppercase "I" or even like "1"
+		"O": rune('o'), // Can look like zero (0)
+	}
+
+	// If the passed character is in the ambiguousChars map, replace it with its
+	// unambiguous version
+	if alt, ok := ambiguousChars[string(r)]; ok {
+		return alt
+	}
+
+	return r
+}
+
 // Sarcastify takes a string and randomly converts the case of each letter to
 // produce a string of mixed case letters to represent sarcasm.
 //
@@ -50,20 +74,24 @@ func normalizeString(str string) string {
 func Sarcastify(str string) string {
 	normalized := normalizeString(str)
 
-	rng := rand.New(rand.NewSource(time.Now().UnixNano())) // Seed for randomness.
-	sarcasm := make([]rune, len(normalized))               // Use runes to handle Unicode correctly.
+	rand := rand.New(rand.NewSource(time.Now().UnixNano())) // Seed for randomness.
+	sarcasm := make([]rune, len(normalized))                // Use runes to handle Unicode correctly.
 
 	for i, r := range normalized {
 		if unicode.IsLetter(r) {
-			if rng.Float64() < 0.5 { // 50% chance of capitalization
+			if rand.Float64() < 0.5 { // 50% chance of capitalization
 				sarcasm[i] = unicode.ToUpper(r)
 			} else {
 				sarcasm[i] = r
 			}
+
+			// Lastly, apply any disambiguation
+			sarcasm[i] = disambiguateChar(sarcasm[i])
 		} else {
 			sarcasm[i] = r // Keep non-letters as they are.
 		}
 	}
+
 	return string(sarcasm)
 }
 
